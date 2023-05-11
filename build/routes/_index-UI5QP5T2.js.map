@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../app/routes/_index.tsx"],
+  "sourcesContent": ["import { KatexCSS, responseNoArticle, responseNoSite } from '@myst-theme/site';\nimport type { LinksFunction, LoaderFunction } from '@remix-run/node';\nimport { redirect } from '@remix-run/node';\nimport { getConfig, getPage } from '~/utils/loaders.server';\nimport Page from './($project)_.$slug';\n\nexport const links: LinksFunction = () => [KatexCSS];\n\nexport const loader: LoaderFunction = async ({ params, request }) => {\n  const config = await getConfig();\n  if (!config) throw responseNoSite();\n  const project = config?.projects?.[0];\n  if (!project) throw responseNoArticle();\n  if (project.slug) return redirect(`/${project.slug}`);\n  const page = await getPage(request, { slug: project.index });\n  return page;\n};\n\nexport default Page;\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAGA,qBAAmC;AAG5B,IAAM,QAAuB,MAAM,CAAC,QAAQ;AAYnD,IAAO,gBAAQ;",
+  "names": []
+}
